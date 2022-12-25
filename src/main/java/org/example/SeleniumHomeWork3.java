@@ -79,7 +79,6 @@ public class SeleniumHomeWork3 {
             System.out.printf("ERROR!!! NEW ACCOUNT DIDN'T CREATE !!!!" );
         }
         driver.findElement(By.xpath("//div[@id='page-content-wrapper']/nav/div/ul/li[2]/a[@class='nav-link']")).click();
-        Thread.sleep(1000);
 
         driver.findElement(By.xpath("//form[@id='login_form']/input[1][@class='ttc_email']")).sendKeys("angelamehri@gmail.com");
         driver.findElement(By.xpath("//form[@id='login_form']/input[2][@class='ttc_password']")).sendKeys("12345");
