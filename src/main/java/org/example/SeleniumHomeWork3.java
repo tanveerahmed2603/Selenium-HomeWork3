@@ -1,5 +1,6 @@
 package org.example;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,15 +19,15 @@ public class SeleniumHomeWork3 {
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(50));// for loading page
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
-        Random randomGenerator= new Random();
+        Random randomGenerator = new Random();
         int randomInt = randomGenerator.nextInt(1000);
         driver.get("https://qa.taltektc.com/");
 
-        // Verifying if Logo is present or not
+        // Verifying if TalentTek Logo is present or not
         WebElement logoElement = driver.findElement(By.xpath("//div[1][@id='wrapper']/div[1]/div/img[@class='img-responsive sidebar-logo']"));
-        if(logoElement.isDisplayed() == true){
+        if (logoElement.isDisplayed() == true) {
             System.out.println("Logo present");
-        }else{
+        } else {
             System.out.println("Logo not Present");
         }
 
@@ -35,12 +36,12 @@ public class SeleniumHomeWork3 {
         driver.findElement(By.partialLinkText("Create")).click();
 
         //Fetching Sign up page Text
-        WebElement element= driver.findElement(By.xpath("//form[@id='signup-form']/legend"));
+        WebElement element = driver.findElement(By.xpath("//form[@id='signup-form']/legend"));
         System.out.println(element.getText());
         Assert.assertEquals(element.getText(), "Sign Up");
 
         //Verifying Sign up page TEXT exist
-        WebElement element2= driver.findElement(By.xpath("//form[@id='signup-form']/h4"));
+        WebElement element2 = driver.findElement(By.xpath("//form[@id='signup-form']/h4"));
         System.out.println(element2.getText());
         Assert.assertEquals(element2.getText(), "It's free and always will be.");
 
@@ -48,7 +49,7 @@ public class SeleniumHomeWork3 {
         driver.findElement(By.xpath("//form[@id='signup-form']/div[3]/div[1]/input[@name='firstName']")).sendKeys("Angela");
         driver.findElement(By.xpath("//form[@id='signup-form']/div[3]/div[2]/input[@name='lastName']")).sendKeys("mehri");
         WebElement emailElement = driver.findElement(By.xpath("//form[@id='signup-form']/input[1][@name='email']"));
-        emailElement.sendKeys("username"+ randomInt + "@gmail.com");
+        emailElement.sendKeys("username" + randomInt + "@gmail.com");
         driver.findElement(By.xpath("//form[@id='signup-form']/input[2][@name='password']")).sendKeys("12345");
         driver.findElement(By.cssSelector("input[placeholder='Confirm Password']")).sendKeys("12345");
         WebElement el = driver.findElement(By.xpath("//form[@id='signup-form']/div[4]/div[1]/select[@name='month']"));
@@ -69,14 +70,14 @@ public class SeleniumHomeWork3 {
         driver.findElement(By.xpath("//form[@id='signup-form']/button[@type='submit']")).click();
 
         //Verifying New user has been created with SUCCESS Message and NEW USER ID
-        String webElement =driver.findElement(By.xpath("//form[@id='signup-form']/div[1]/div[@class='alert alert-success']")).getText();
+        String webElement = driver.findElement(By.xpath("//form[@id='signup-form']/div[1]/div[@class='alert alert-success']")).getText();
         System.out.println(webElement);
 
         //Validating New USER CREATED WITH TEXT AND ID
-        if(webElement.contains("Thank you for sign up, here your id - ")){
+        if (webElement.contains("Thank you for sign up, here your id - ")) {
             System.out.println("You have successfully created new account");
-        }else{
-            System.out.printf("ERROR!!! NEW ACCOUNT DIDN'T CREATE !!!!" );
+        } else {
+            System.out.printf("ERROR!!! NEW ACCOUNT DIDN'T CREATE !!!!");
         }
         driver.findElement(By.xpath("//div[@id='page-content-wrapper']/nav/div/ul/li[2]/a[@class='nav-link']")).click();
 
@@ -84,7 +85,38 @@ public class SeleniumHomeWork3 {
         driver.findElement(By.xpath("//form[@id='login_form']/input[2][@class='ttc_password']")).sendKeys("12345");
         driver.findElement(By.xpath("//form[@id='login_form']/input[3][@class='my-login']")).click();
 
+        //Click action on Alert link
+        driver.findElement(By.linkText("Alert")).click();
 
-//        driver.close();
+        //Click Action on info Button
+        driver.findElement(By.xpath("//button[@id='info']")).click();
+
+        //Storing Info Button Element
+        WebElement infoButtonTextElement = driver.findElement(By.xpath("//div[@class='swal-text']"));
+        infoButtonTextElement.click();
+
+        if (infoButtonTextElement.getText().contains("You clicked the button!")) {
+            System.out.println("You got the TEXT you were looking for");
+        } else {
+            System.out.println("OPPS!!! Something went wrong!!");
+        }
+
+
+        driver.findElement(By.xpath("//button[@class='swal-button swal-button--confirm']")).click();
+
+        //Getting JS Alert
+        driver.findElement(By.xpath("//div[@id='page-content-wrapper']/div/button[7]")).click();
+        Alert jsAlert = driver.switchTo().alert();
+        System.out.println(driver.switchTo().alert().getText());
+
+        //Verifying JS Alert Text
+        if (jsAlert.getText().contains("Hello! I am Javascript alert box!")) {
+            System.out.println("You have the correct JS Alert");
+        } else {
+            System.out.println("You got Incorrect Alert,Try Again");
+        }
+
+
+        driver.close();
     }
 }
